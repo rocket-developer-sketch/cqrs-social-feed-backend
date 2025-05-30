@@ -1,0 +1,61 @@
+spring:
+#  profiles:
+#    active: local # 배포 시 prod로 변경
+  application:
+    name: socialfeed-api
+
+#  🔄 실행 시 프로파일 지정 방법
+#  application.yml 내 spring.profiles.active 변경
+#  또는 실행 시 -Dspring.profiles.active=prod
+#  또는 환경변수: SPRING_PROFILES_ACTIVE=prod
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  web:
+    resources:
+      add-mappings: true
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+  resources:
+    static-locations: classpath:/static/,classpath:/public/
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+  api-docs:
+    path: /v1/api-docs
+
+jwt:
+  secret: socialfeed-jwt-secret-key
+  access-token-validity: 1800000 # 30분
+  refresh-token-validity: 3600000 # 1시간
+
+auth:
+  protected-paths:
+    - /api/**
+    - /notifications/**
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+

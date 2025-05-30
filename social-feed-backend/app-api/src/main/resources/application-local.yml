@@ -1,0 +1,53 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/socialfeed
+    username: postgres
+    password: pass123wod
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # 개발 중엔 update/validate 사용
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  redis:
+    host: redis
+    port: 6379
+
+  data:
+    mongodb:
+      uri: mongodb://mongo:27017/socialfeed
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: socialfeed-group
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    listener:
+      ack-mode: record
+
+cors:
+  allowed-origins:
+    - http://localhost:8080
+
+upload:
+  host: http://localhost:8080
+  relativePath: /uploads/
+  allowed-extensions:
+    - jpg
+    - jpeg
+    - png
+    - gif
+    - webp

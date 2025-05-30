@@ -1,0 +1,53 @@
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+#Docker
+compose.prod.yml
+
+## Spring Boot
+app-api/src/main/resources/tesmplates
+app-api/src/main/resources/application-prod.yml
+app-api/src/main/resources/application-prod-secret.yml
+
+# JAVA
+app-api/src/main/java/com/cqrs/socialfeed/api/TestController.java
+
+# DOCKER volumes
+volumes/**
+
+### IntelliJ IDEA ###
+.idea/**
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store

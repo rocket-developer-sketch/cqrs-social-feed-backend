@@ -1,0 +1,12 @@
+rootProject.name = 'social-feed'
+include 'app-api'
+include 'domain-core'
+include 'command-application'
+include 'query-application'
+include 'infra-rds'
+include 'infra-mongo'
+include 'infra-kafka'
+include 'infra-redis'
+include 'common'
+include 'infra-websocket'
+
