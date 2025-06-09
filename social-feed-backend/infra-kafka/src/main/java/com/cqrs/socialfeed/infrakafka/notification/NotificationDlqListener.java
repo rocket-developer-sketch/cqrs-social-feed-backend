@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -65,28 +63,21 @@ public class NotificationDlqListener {
             // 실패 횟수 증가
             failureCount++;
 
-            List<Notification> notifications = new ArrayList<>();
-
-            for (Long receiverId : event.getReceiverIds()) {
-                // Notification 객체 생성
-                Notification notification = new Notification(
-                        null,
-                        receiverId,  // 각 receiverId에 대해 개별적인 알림을 생성
-                        event.getMessage(),
-                        event.getType(),
-                        false,
-                        LocalDateTime.parse(event.getCreatedAt(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-                );
-                notifications.add(notification);  // 알림 리스트에 추가
-            }
+            // Notification 객체 생성
+            Notification notification = new Notification(
+                    null,
+                    event.getReceiverId(),  // 각 receiverId에 대해 개별적인 알림을 생성
+                    event.getMessage(),
+                    event.getType(),
+                    false,
+                    LocalDateTime.parse(event.getCreatedAt(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            );
 
             // DB에 알림 저장 (배치 저장)
-            notificationRepository.saveAll(notifications);  // 여러 알림을 한 번에 저장
+            notificationRepository.save(notification);  // 여러 알림을 한 번에 저장
 
-            // 각 receiverId에 대해 WebSocket 실시간 전송
-            for (Notification notification : notifications) {
-                notificationDispatcher.dispatch(notification);  // WebSocket 전송
-            }
+            // receiverId에 대해 WebSocket 실시간 전송
+            notificationDispatcher.dispatch(notification);  // WebSocket 전송
 
             // 실패 횟수 업데이트 (메모리 기반)
             updateFailureCount(event, failureCount);
