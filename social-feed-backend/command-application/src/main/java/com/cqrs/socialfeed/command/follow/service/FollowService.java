@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,7 +52,7 @@ public class FollowService implements FollowUserUseCase, UnfollowUserUseCase {
 
         followRepository.follow(follow);
 
-        NotificationEvent notification = new NotificationEvent(NotificationType.POST_NEW, List.of(command.getFollowerId()), command.getFolloweeId(),
+        NotificationEvent notification = new NotificationEvent(NotificationType.POST_NEW, command.getFollowerId(), command.getFolloweeId(),
                 generateNotificationMessage(command), command.getFollowerId(), LocalDateTime.now().toString());
 
         notificationEventProducer.send(notification);
