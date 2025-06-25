@@ -23,7 +23,7 @@ public class LocalCorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(corsProperties.getAllowedOrigins().toArray(new String[0]))
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true); // 와일드카드와 함께라면 false여야 함
             }
